@@ -9,7 +9,7 @@ using Terraria;
 
 namespace AntiWoF
 {
-	[ApiVersion(1, 12)]
+	[ApiVersion(1, 14)]
 	public class AntiWoF : TerrariaPlugin
 	{
 		public override string Author
@@ -37,12 +37,13 @@ namespace AntiWoF
 
 		protected override void Dispose(bool disposing)
 		{
-			if (disposing) ServerApi.Hooks.NetGetData.Register(this, OnGetData, 10);
+			if (disposing) ServerApi.Hooks.NetGetData.Deregister(this, OnGetData);
 			base.Dispose(disposing);
 		}
+
 		public override void Initialize()
 		{
-			ServerApi.Hooks.NetGetData.Deregister(this, OnGetData);
+			ServerApi.Hooks.NetGetData.Register(this, OnGetData, 10);
 		}
 
 		void OnGetData(GetDataEventArgs e)
