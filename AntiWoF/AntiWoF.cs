@@ -4,12 +4,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Hooks;
+using TerrariaApi.Server;
 using Terraria;
 
 namespace AntiWoF
 {
-	[APIVersion(1, 12)]
+	[ApiVersion(1, 14)]
 	public class AntiWoF : TerrariaPlugin
 	{
 		public override string Author
@@ -32,19 +32,18 @@ namespace AntiWoF
 		public AntiWoF(Main game)
 			: base(game)
 		{
-			Order = -10;
+			Order = 10;
 		}
 
 		protected override void Dispose(bool disposing)
 		{
-			if (disposing)
-			{
-				NetHooks.GetData -= OnGetData;
-			}
+			if (disposing) ServerApi.Hooks.NetGetData.Deregister(this, OnGetData);
+			base.Dispose(disposing);
 		}
+
 		public override void Initialize()
 		{
-			NetHooks.GetData += OnGetData;
+			ServerApi.Hooks.NetGetData.Register(this, OnGetData, 10);
 		}
 
 		void OnGetData(GetDataEventArgs e)
