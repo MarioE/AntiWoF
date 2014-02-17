@@ -9,7 +9,7 @@ using Terraria;
 
 namespace AntiWoF
 {
-	[ApiVersion(1, 14)]
+	[ApiVersion(1, 15)]
 	public class AntiWoF : TerrariaPlugin
 	{
 		public override string Author
